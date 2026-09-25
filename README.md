@@ -57,7 +57,8 @@ agent = Agent("Model name")
 response = agent.call("Your prompt here")
 
 # Example: interactive chat
-agent.chat()
+while (message:= input("user: ")) != "\\exit":
+    print(f"agent: {agent.chat(message)}")
 ```
 
 *(Update the snippet above to match the actual constructor/method signatures.)*
