@@ -40,7 +40,7 @@ Using the `Agent` class, from the main code you can currently:
 ### Installation
 
 ```bash
-git clone https://github.com/TituxDev/AssitantX.git
+git clone https://github.com/TituxDev/AssistantX.git
 cd AssistantX
 pip install -r requirements.txt
 ```
@@ -50,7 +50,7 @@ pip install -r requirements.txt
 > This section will be expanded as the interface stabilizes. For now, the `Agent` class is used directly from the main script — example usage to be added once the entry point is finalized.
 
 ```python
-from agent import Agent
+from system.core.agent import Agent
 
 # Example: single call
 agent = Agent("Model name")
@@ -78,8 +78,8 @@ while (message:= input("user: ")) != "\\exit":
 AssistantX/
 ├── system
 |   └── core
-|       ├── agent.py          # Agent class: model communication + message history
-|       └── requirements.txt
-├── requirements.txt  # Python dependencies
+|       ├── __init__.py
+|       ├── agent.py            # Agent class: model communication + message history
+|       └── requirements.txt    # Python dependencies
 └── README.md
 ```
