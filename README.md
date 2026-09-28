@@ -74,12 +74,24 @@ while (message:= input("user: ")) != "\\exit":
 
 ## Project Structure
 
-```
+```text
 AssistantX/
-├── system
-|   └── core
-|       ├── __init__.py
-|       ├── agent.py            # Agent class: model communication + message history
-|       └── requirements.txt    # Python dependencies
+├── system/
+|   ├── agents/
+|   ├── config/
+|   ├── core/
+|   |   ├── __init__.py
+|   |   ├── agent.py            # Agent class: model communication + message history
+|   |   └── requirements.txt    # Python dependencies
+|   ├── processes/
+|   ├── memory/
+|   ├── skills/
+|   └── tools/
+├── user/
+|   ├── agents/
+|   ├── processes/
+|   ├── projects/
+|   ├── skills/
+|   └── tools/
 └── README.md
 ```

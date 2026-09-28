@@ -24,11 +24,12 @@ class Agent:
         "gemini": Provider("https://generativelanguage.googleapis.com/v1beta/models/", ["gemini-3.1-flash-lite"])
     }
 
-    def __init__(self, model):
+    def __init__(self, model, system= "", context= ""):
         self.update_model(model)
-        self.system= ""
+        self.system= system
+        self.context= context
         self.history= []
-    
+
     def update_model(self, model):
         for provider, info in self.available_models.items():
             if model in info.models:
@@ -40,8 +41,16 @@ class Agent:
         else:
             raise ValueError(f"Model {model} is not available")
 
-    def call(self, message):
-        connection= self.api(message, "build request")
+    def __str__(self):
+        return f"""
+            Provider: {self.provider}
+            Model: {self.model}
+            Agent: {self.system}
+        """
+
+
+    def call(self, message, context= ""):
+        connection= self.api(message, "build request", context)
         try:
             response= requests.post(connection[0], json=connection[1])
         except requests.exceptions.RequestException:
@@ -52,17 +61,17 @@ class Agent:
             raise RuntimeError("Provider rejected request")
         return response
 
-    def chat(self, message):
+    def chat(self, message, context= ""):
         response= self.call(message)
         try:
-            response= self.api(response, "filter response")
+            response= self.api(response, "filter response", context)
         except (AttributeError, TypeError, KeyError, IndexError) as e:
             raise RuntimeError("Invalid response received from provider.") from e
-        self.history.append(self.api(message, "message register"))
-        self.history.append(self.api(response, "response register"))
+        self.history.append(self.api(message, "message register", context))
+        self.history.append(self.api(response, "response register", context))
         return response
 
-    def ollama(self, message, mode):
+    def ollama(self, message, mode, context= ""):
         match mode:
             case "build request":
                 return ( self.url ,
@@ -70,6 +79,7 @@ class Agent:
                             "model": self.model,
                             "messages": [
                                 {"role": "system", "content": self.system},
+                                {"role": "system", "content": f"[CONTEXT]\n{context}"},
                                 *self.history,
                                 {"role": "user", "content": message}
                             ],
@@ -83,13 +93,16 @@ class Agent:
             case "response register":
                 return {"role": "assistant", "content": message}
 
-    def gemini(self, message, mode):
+    def gemini(self, message, mode, context=""):
         match mode:
             case "build request":
                 return (self.url + f"{self.model}:generateContent?key={os.environ['DEFAULT_GEMINI_API_KEY']}" ,
                     {
                         "system_instruction": {
-                            "parts": [{"text": self.system}]
+                            "parts": [
+                                {"text": self.system},
+                                {"text": f"[CONTEXT]\n{context}"}
+                            ]
                         },
                         "contents": [
                             *self.history,
