@@ -42,7 +42,7 @@ Using the `Agent` class, from the main code you can currently:
 ```bash
 git clone https://github.com/TituxDev/AssistantX.git
 cd AssistantX
-pip install -r requirements.txt
+pip install -r core/requirements.txt
 ```
 
 ### Usage
@@ -65,7 +65,7 @@ while (message:= input("user: ")) != "\\exit":
 
 ## Roadmap
 
-- [ ] Expand beyond a single `Agent` into a multi-agent architecture (agents + skills working together)
+- [X] Expand beyond a single `Agent` into a multi-agent architecture (agents + skills working together)
 - [ ] Support mixing models for different purposes, rather than one model for everything
 - [ ] Build the internal memory/user-profile inference system
 - [ ] Define a generic interface/environment for plugging in new agents to solve new kinds of issues
