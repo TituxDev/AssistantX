@@ -121,4 +121,3 @@ Use when an existing interest should be reformulated because the new evidence pr
 Use only when the new evidence provides strong reason to conclude that an existing interest should no longer be maintained.
 
 Do not use `weaken` or `remove` merely because an interest was not mentioned in the new interaction.
-

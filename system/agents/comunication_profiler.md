@@ -136,4 +136,3 @@ Use when an existing characteristic should be reformulated because the new evide
 Use only when the new evidence provides strong evidence that an existing characteristic is no longer applicable.
 
 Do not use `weaken` or `remove` merely because a characteristic was not observed in the new interaction.
-
