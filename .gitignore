@@ -2,3 +2,5 @@
 RESUME/
 **__pycache__
 user/
+system/memory/*
+!**__init__.py

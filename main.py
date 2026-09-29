@@ -2,13 +2,16 @@
 Conceptual system test for user profile recognition
 '''
 from system.core.agent import Agent
-from system.agents import agents
+from system.processes import markdown as mkd
+from system import agents
 
-print(agents)
-chatter= Agent("gemini-3.1-flash-lite")
+file= mkd.extract(agents.path / "void.md")
+print(mkd.construct(file, "name"))
 
-with open("user/agents/user_profiler.md", 'r' , encoding="utf-8") as prompt:
-    user_profiler= Agent("gemini-3.1-flash-lite", prompt.read())
+chatter= Agent("llama3.1:latest")
+
+with open(agents.path / "user_profiler.md", 'r' , encoding="utf-8") as prompt:
+    user_profiler= Agent("llama3.1:latest", prompt.read())
 
 while (message:= input("You: ")) != "\\exit":
     response= chatter.chat(message)
