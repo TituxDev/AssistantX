@@ -5,4 +5,4 @@ path= Path(__file__).resolve().parent
 agents = {}
 
 for p in path.glob("*.md"):
-    agents[p.stem]= extract(p, "role")
+    agents[p.stem]= next(iter(extract(p).values()))["role"]

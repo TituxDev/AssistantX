@@ -4,3 +4,4 @@ RESUME/
 user/
 system/memory/*
 !**__init__.py
+**test*
