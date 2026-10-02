@@ -29,6 +29,7 @@ class Agent:
         self.system= system
         self.context= context
         self.history= []
+        self.temperature= 0.0
 
     def update_model(self, model):
         for provider, info in self.available_models.items():
@@ -83,7 +84,8 @@ class Agent:
                                 *self.history,
                                 {"role": "user", "content": message}
                             ],
-                            "stream": False
+                            "stream": False,
+                            "temperature": self.temperature
                         }
                     )
             case "filter response":
@@ -107,7 +109,10 @@ class Agent:
                         "contents": [
                             *self.history,
                             {"role": "user", "parts": [{"text": message}]}
-                        ]
+                        ],
+                        "generationConfig": {
+                            "temperature": self.temperature
+                        },
                     }
                 )
             case "filter response":
